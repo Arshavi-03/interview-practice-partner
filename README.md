@@ -46,22 +46,7 @@
 
 ---
 
-## 🎥 Demo
 
-[Watch Demo Video](YOUR_DEMO_VIDEO_LINK_HERE)
-
-### Screenshots
-
-**Welcome Screen**
-![Welcome Screen](screenshots/welcome.png)
-
-**Interview in Progress**
-![Interview](screenshots/interview.png)
-
-**Feedback Report**
-![Feedback](screenshots/feedback.png)
-
----
 
 ## 🚀 Installation
 
@@ -432,37 +417,6 @@ AI: "I appreciate the enthusiasm! For this interview, let's
 
 ---
 
-## 🔮 Future Enhancements
-
-### Planned Features
-- [ ] Real-time speech-to-text (user speaks answers)
-- [ ] Video recording of practice sessions
-- [ ] Multi-round interview support
-- [ ] Interview history dashboard
-- [ ] Performance analytics over time
-- [ ] Custom role creation by users
-- [ ] Export feedback as PDF
-- [ ] Integration with calendar
-- [ ] Collaborative feedback (share with mentors)
-- [ ] Industry-specific question banks
-- [ ] Mock group interview scenarios
-- [ ] Salary negotiation practice mode
-
-### Technical Improvements
-- [ ] Add database for conversation history
-- [ ] Implement caching for faster responses
-- [ ] Add A/B testing for prompts
-- [ ] Deploy to cloud (Streamlit Cloud/AWS)
-- [ ] Add user authentication
-- [ ] Implement rate limiting
-- [ ] Add telemetry and analytics
-- [ ] Support multiple languages
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
 
 ### Development Setup
 1. Fork the repository
@@ -470,25 +424,8 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 👤 Author
-
-**Your Name**
-- Built for: Eightfold.ai AI Agent Building Assignment
-- Date: November 2025
-- Email: your.email@example.com
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
-- GitHub: [@yourusername](https://github.com/yourusername)
-
----
 
 ## 🙏 Acknowledgments
 
@@ -506,16 +443,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [UV Package Manager](https://github.com/astral-sh/uv)
 - [STAR Interview Method](https://www.indeed.com/career-advice/interviewing/how-to-use-the-star-interview-response-technique)
 - [Behavioral Interview Guide](https://www.themuse.com/advice/behavioral-interview-questions-answers-examples)
-
----
-
-## 📞 Support
-
-If you have questions or need help:
-1. Check the [Issues](https://github.com/yourusername/interview-practice-partner/issues) page
-2. Create a new issue with detailed description
-3. Contact via email: your.email@example.com
-
 ---
 
 <div align="center">
