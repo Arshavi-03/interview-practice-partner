@@ -156,8 +156,8 @@ Begin with a greeting using their name ({self.candidate_name}), brief introducti
         """Detect if user wants to end interview early"""
         exit_keywords = [
             'end interview', 'stop interview', 'finish interview', 'quit', 
-            'want to stop', 'need to leave', 'have to go', 'end this',
-            "that's all", 'no more questions', "i'm done", 'terminate'
+            'want to stop', 'want to end', 'need to leave', 'have to go', 'end this',
+            "that's all", 'no more questions', "i'm done", 'terminate', 'stop this'
         ]
         response_lower = user_response.lower().strip()
         

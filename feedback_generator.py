@@ -48,35 +48,45 @@ CANDIDATE BACKGROUND:
             early_exit = self.behavior_metadata.get('user_requested_exit', False)
             duration_used = self.behavior_metadata.get('interview_duration_used', 0)
             
-            # IDENTIFY USER PERSONA
-            if off_topic >= 3:
-                user_persona = "CHATTY USER"
-                persona_notes.append("You frequently went off-topic or provided lengthy, unfocused answers")
-                persona_notes.append("This indicates a tendency to provide excessive context or tangential information")
-            elif off_topic >= 1:
-                user_persona = "Moderately Talkative User"
-                persona_notes.append("You occasionally went off-topic but generally stayed focused")
+            # IDENTIFY USER PERSONA - Priority order matters!
             
-            if confusion >= 3:
-                if user_persona != "CHATTY USER":
-                    user_persona = "CONFUSED USER"
-                else:
-                    user_persona = "CHATTY & CONFUSED USER"
-                persona_notes.append("You showed repeated confusion with interview questions")
-                persona_notes.append("This suggests you may need more preparation or context about the role")
-            elif confusion >= 1:
-                if "Confused" not in user_persona:
-                    persona_notes.append("You showed some uncertainty but recovered well")
-            
+            # Check early exit FIRST (highest priority)
             if early_exit:
                 user_persona = "EARLY EXIT USER"
                 persona_notes.append("You requested to end the interview before time was up")
                 persona_notes.append("This may indicate nervousness, time constraints, or lack of preparation")
             
-            if off_topic == 0 and confusion == 0 and not early_exit and len(self.conversation_history) >= 6:
+            # Check confusion (high priority - can override talkative)
+            elif confusion >= 3:
+                user_persona = "CONFUSED USER"
+                persona_notes.append(f"You expressed confusion or uncertainty {confusion} times during the interview")
+                persona_notes.append("You struggled to understand several questions and needed clarification")
+                persona_notes.append("This suggests you may benefit from researching common interview terminology before your next interview")
+            
+            # Check chatty/off-topic
+            elif off_topic >= 3:
+                user_persona = "CHATTY USER"
+                persona_notes.append(f"You went off-topic {off_topic} times during the interview")
+                persona_notes.append("This indicates a tendency to provide excessive context or tangential information")
+                persona_notes.append("Your answers often included unrelated details or lengthy explanations")
+            
+            # Check efficient (all good)
+            elif off_topic == 0 and confusion == 0 and len(self.conversation_history) >= 6:
                 user_persona = "EFFICIENT USER"
                 persona_notes.append("You provided focused, well-structured answers throughout")
-                persona_notes.append("Your responses were clear and stayed on topic")
+                persona_notes.append("Your responses were clear, concise, and stayed on topic")
+                persona_notes.append("You demonstrated strong communication skills and interview readiness")
+            
+            # Moderate cases
+            elif off_topic >= 1 and confusion == 0:
+                user_persona = "Moderately Talkative User"
+                persona_notes.append(f"You occasionally went off-topic ({off_topic} times) but generally stayed focused")
+            elif confusion >= 1 and off_topic == 0:
+                user_persona = "Moderately Uncertain User"
+                persona_notes.append(f"You showed some uncertainty ({confusion} times) but recovered reasonably well")
+            else:
+                user_persona = "Standard User"
+                persona_notes.append("You showed typical interview behavior with room for improvement")
             
             # Build persona notes list
             persona_notes_text = '\n'.join([f'• {note}' for note in persona_notes])
@@ -113,10 +123,15 @@ FOR CHATTY USER (off-topic ≥ 3):
 - Specific tip: "Your answer about [X] went off-topic when you mentioned [Y]"
 
 FOR CONFUSED USER (confusion ≥ 3):
-- Emphasize it's okay to ask clarifying questions
-- Recommend researching common interview terminology
-- Practice understanding technical concepts
-- Specific tip: "When asked about [X], you seemed unsure - here's what it means..."
+- CRITICAL: Emphasize this is a CONFUSED USER who struggled with comprehension
+- Start feedback by acknowledging they expressed confusion {confusion} times
+- Explain that asking clarifying questions is GOOD interview practice
+- Provide specific examples: "When I asked about [X], you said 'I'm confused' - this shows..."
+- Recommend: Research common {self.role} terminology and concepts
+- Suggest: In real interviews, say "Could you clarify what you mean by [term]?" or "Can you give me an example?"
+- Be encouraging but honest about needing more preparation
+- Rate Communication Clarity LOW (2-3 stars) due to comprehension issues
+- Specific tips: "Study [specific concept you were confused about]", "Practice with a friend explaining technical terms"
 
 FOR EARLY EXIT USER:
 - Be encouraging and supportive
@@ -219,10 +234,13 @@ Example for Chatty User:
 - Practice the 90-second rule: Situation (15s), Task (15s), Action (45s), Result (15s)
 - Before answering, mentally ask: "Does this directly answer the question?"
 
-Example for Confused User:
-- When asked about [specific technical topic], you seemed unsure - it's perfectly fine to ask "Could you clarify what you mean by [term]?"
-- Research common {self.role} terminology before interviews
-- If stuck, ask: "Can you give me an example of what you're looking for?"
+Example for Confused User (IMPORTANT - This user struggled with comprehension):
+- You said "I'm confused" or "I don't understand" {confusion} times - this shows you need more preparation on {self.role} concepts
+- When I asked about [specific topic], you expressed uncertainty - here's what it means: [brief explanation]
+- In real interviews, it's GOOD to ask: "Could you clarify what you mean by [technical term]?" or "Can you give me an example?"
+- Action: Research and study these concepts you were confused about: [list specific topics]
+- Practice explaining technical terms in simple language to build confidence
+- Your comprehension challenges suggest starting with entry-level interview prep materials
 
 Example for Early Exit User:
 - You completed {duration_used:.1f} minutes before requesting to end - build stamina with 5-minute practice sessions, then 10, then 15
@@ -265,7 +283,15 @@ CRITICAL INSTRUCTIONS:
 - Each "Strength" and "Improve" should be ONE line only
 - Focus on actionable advice
 - Make it encouraging but honest
-- Total length should be much shorter than typical feedback"""
+- Total length should be much shorter than typical feedback
+
+RATING GUIDANCE BY PERSONA:
+- CONFUSED USER: Communication Clarity should be ⭐⭐☆☆☆ (2/5) or ⭐⭐⭐☆☆ (3/5) maximum due to comprehension issues
+- CONFUSED USER: Technical Knowledge should be ⭐⭐☆☆☆ (2/5) since they didn't understand basic concepts
+- CONFUSED USER: Overall Rating should be ⭐⭐☆☆☆ (2/5) or ⭐⭐⭐☆☆ (3/5) maximum
+- CHATTY USER: Communication Clarity reduced by 1 star for being unfocused
+- EFFICIENT USER: Communication Clarity should be ⭐⭐⭐⭐⭐ (5/5) or ⭐⭐⭐⭐☆ (4/5)
+- EARLY EXIT: Rate based on completed portion, mention interview was incomplete"""
 
         try:
             # Generate feedback

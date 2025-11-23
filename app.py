@@ -138,7 +138,7 @@ with st.sidebar:
 
 # Main content
 if not st.session_state.interview_started:
-    
+    st.markdown('<div class="setup-container">', unsafe_allow_html=True)
     st.markdown(f'<div class="app-header"><h1 class="app-title">{st.session_state.page_title}</h1><p class="app-subtitle">AI-Powered Mock Interviews with Personalized Feedback</p></div>', unsafe_allow_html=True)
     
     col1, col2 = st.columns([1, 1], gap="large")
